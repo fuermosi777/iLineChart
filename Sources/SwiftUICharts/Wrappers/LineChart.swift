@@ -28,10 +28,17 @@ public struct LineChart: View {
     private var chartStyle: ChartStyle = Styles.lineChartStyleOne
     private var edgesIgnored: Edge.Set
     
+    
     public init (data: [Double],
                  title: String? = nil,
                  subTitle: String? = nil,
-                 style: LineChartStyle? = .primary,
+                 style: LineChartStyle = .primary,
+                 lineGradient: GradientColor? = nil,
+                 chartBackgroundGradient: GradientColor? = nil,
+                 titleColor: Color? = nil,
+                 subtitleColor: Color? = nil,
+                 numberColor: Color? = nil,
+                 canvasBackgroundColor: Color? = nil,
                  curvedLines: Bool = true,
                  cursorColor: Color = Colors.IndicatorKnob,
                  displayChartStats: Bool = false,
@@ -45,7 +52,7 @@ public struct LineChart: View {
                  floatingPntNumberFormat: String = "%.1f",
                  fullScreen: Bool = false) {
         
-        // Assign data
+        
         self.data = data
         self.title = title
         self.subTitle = subTitle
@@ -69,17 +76,22 @@ public struct LineChart: View {
         }
         
         switch style {
-        case .custom(let customStyle):
-            self.chartStyle = customStyle
         case .primary:
             self.chartStyle = Styles.lineChartStyleTwo
         case .secondary:
             self.chartStyle = Styles.lineChartStyleThree
         case .tertiary:
             self.chartStyle = Styles.lineChartStyleFour
-        default:
-            self.chartStyle = Styles.lineChartStyleOne
+        case .dark:
+            self.chartStyle = Styles.darkPrimary
         }
+        
+        self.chartStyle.backgroundColor = (canvasBackgroundColor != nil) ? canvasBackgroundColor! : self.chartStyle.backgroundColor
+        self.chartStyle.backgroundGradient = (chartBackgroundGradient != nil) ? chartBackgroundGradient! : self.chartStyle.backgroundGradient
+        self.chartStyle.lineGradient = (lineGradient != nil) ? lineGradient! : self.chartStyle.lineGradient
+        self.chartStyle.textColor = (titleColor != nil) ? titleColor! : self.chartStyle.textColor
+        self.chartStyle.legendTextColor = (subtitleColor != nil) ? subtitleColor! : self.chartStyle.legendTextColor
+        self.chartStyle.numbersColor = (numberColor != nil) ? numberColor! : self.chartStyle.numbersColor
     }
     
     
@@ -113,7 +125,8 @@ public enum LineChartStyle {
     case primary
     case secondary
     case tertiary
-    case custom(ChartStyle)
+    case dark
+//    case custom(ChartStyle)
 }
 
 public enum BarChartStyle {

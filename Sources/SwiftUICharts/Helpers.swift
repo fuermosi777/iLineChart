@@ -62,6 +62,14 @@ public struct GradientColors {
 }
 
 public struct Styles {
+    public static let darkPrimary = ChartStyle(
+        canvasBackgroundColor: Colors.NeonBlack,
+        lineGradient: GradientColor(start: Color.white, end: Color.white),
+        chartBackgroundGradient: GradientColor(start: Colors.NeonBlack, end: Colors.NeonBlack),
+        titleColor: Color.white,
+        subtitleColor: Color.gray,
+        numberColor: Color.white)
+    
     public static let lineChartStyleTwo = ChartStyle(
         backgroundColor: Color.white,
         accentColor: Colors.GradientNeonBlue,
