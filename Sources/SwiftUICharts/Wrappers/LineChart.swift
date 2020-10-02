@@ -15,17 +15,18 @@ public struct LineChart: View {
     public var cursorColor: Color
     public var curvedLines: Bool
     public var displayChartStats: Bool
-    public var width: CGFloat
-    public var height: CGFloat
+    public var minWidth: CGFloat
+    public var minHeight: CGFloat
+    public var maxWidth: CGFloat
+    public var maxHeight: CGFloat
     
     public var titleFont: Font
     public var subtitleFont: Font
     public var priceFont: Font
     public var fullScreen: Bool
     
-    
     private var chartStyle: ChartStyle = Styles.lineChartStyleOne
-    
+    private var edgesIgnored: Edge.Set
     
     public init (data: [Double],
                  title: String? = nil,
@@ -34,8 +35,10 @@ public struct LineChart: View {
                  curvedLines: Bool = true,
                  cursorColor: Color = Colors.IndicatorKnob,
                  displayChartStats: Bool = false,
-                 width: CGFloat = 360,
-                 height: CGFloat = 420,
+                 minWidth: CGFloat = 0,
+                 minHeight: CGFloat = 0,
+                 maxWidth: CGFloat = .infinity,
+                 maxHeight: CGFloat = .infinity,
                  titleFont: Font = .system(size: 30, weight: .regular, design: .rounded),
                  subtitleFont: Font = .system(size: 14, weight: .light, design: .rounded),
                  dataFont: Font = .system(size: 16, weight: .bold, design: .monospaced),
@@ -50,12 +53,20 @@ public struct LineChart: View {
         self.cursorColor = cursorColor
         self.curvedLines = curvedLines
         self.displayChartStats = displayChartStats
-        self.width = width
-        self.height = height
+        self.minHeight = minHeight
+        self.minWidth = minWidth
+        self.maxHeight = maxHeight
+        self.maxWidth = maxWidth
         self.subtitleFont = subtitleFont
         self.titleFont = titleFont
         self.priceFont = dataFont
         self.fullScreen = fullScreen
+        
+        if fullScreen {
+            self.edgesIgnored = .all
+        } else {
+            self.edgesIgnored = .bottom
+        }
         
         switch style {
         case .custom(let customStyle):
@@ -73,15 +84,27 @@ public struct LineChart: View {
     
     
     public var body: some View {
-        if fullScreen {
-            LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width: self.width, height: self.height, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .background(self.chartStyle.backgroundColor)
-                .edgesIgnoringSafeArea(.all)
-        } else {
-            LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width: self.width, height: self.height, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
-        }
-        
+//        GeometryReader { g in
+//            if fullScreen {
+//                LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width: g.size.width, height: g.size.height, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
+//                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+//                    .background(self.chartStyle.backgroundColor)
+//                    .edgesIgnoringSafeArea(.all)
+//            } else if (width == nil && height != nil) {
+//                LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width: g.size.width, height: self.height!, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
+//            } else if (width != nil && height != nil) {
+//                LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width:self.width!, height: self.height!, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
+//            } else if (width != nil && height == nil) {
+//                LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width:self.width!, height: g.size.width, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
+//            } else {
+//                LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, width: g.size.width, height: (g.size.height), titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont)
+//            }
+//        }
+        LineChartView(data: self.data, title: self.title, legend: self.subTitle, style: self.chartStyle,  valueSpecifier: self.floatingPntNumberFormat, cursorColor: self.cursorColor, curvedLines: self.curvedLines, displayChartStats: self.displayChartStats, minWidth: self.minWidth, minHeight: self.minHeight, maxWidth: self.maxWidth, maxHeight: maxHeight, titleFont: self.titleFont, subtitleFont: self.subtitleFont, priceFont: self.priceFont, fullScreen: self.fullScreen)
+//            .background(self.chartStyle.backgroundColor)
+//            .edgesIgnoringSafeArea(self.edgesIgnored)
+//            .padding()
+            
     }
 }
 

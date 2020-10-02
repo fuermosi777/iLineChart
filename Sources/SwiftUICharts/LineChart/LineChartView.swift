@@ -24,12 +24,18 @@ struct LineChartView: View {
     public var curvedLines: Bool
     public var displayChartStats: Bool
     
-    public var width: CGFloat
-    public var height: CGFloat
+    public var minWidth: CGFloat
+    public var minHeight: CGFloat
+    public var maxWidth: CGFloat
+    public var maxHeight: CGFloat
     
     public var titleFont: Font
     public var subtitleFont: Font
     public var priceFont: Font
+    
+    private var contentHeight: CGFloat = 0
+    private var topPadding: CGFloat = 0
+    private var edgesIgnored: Edge.Set
     
     @State private var touchLocation:CGPoint = .zero
     @State private var showIndicatorDot: Bool = false
@@ -54,11 +60,14 @@ struct LineChartView: View {
                 cursorColor: Color = Colors.IndicatorKnob,
                 curvedLines: Bool = true,
                 displayChartStats: Bool = true,
-                width: CGFloat = 360,
-                height: CGFloat = 360,
+                minWidth: CGFloat = 0,
+                minHeight: CGFloat = 0,
+                maxWidth: CGFloat = .infinity,
+                maxHeight: CGFloat = .infinity,
                 titleFont: Font = .system(size: 30, weight: .regular, design: .rounded),
                 subtitleFont: Font = .system(size: 14, weight: .light, design: .rounded),
-                priceFont: Font = .system(size: 16, weight: .bold, design: .monospaced)
+                priceFont: Font = .system(size: 16, weight: .bold, design: .monospaced),
+                fullScreen: Bool = false
                 ) {
         
         self.rawData = data
@@ -67,10 +76,15 @@ struct LineChartView: View {
         self.legend = legend
         self.style = style
         self.darkModeStyle = style.darkModeStyle != nil ? style.darkModeStyle! : Styles.lineViewDarkMode
-        self.formSize = CGSize(width: width, height: height)
-        self.width = width
-        self.height = height
-        frame = CGSize(width: width, height: height/2)
+//        self.formSize = CGSize(width: width, height: height)
+//        self.width = width
+//        self.height = height
+//        frame = CGSize(width: width, height: height)
+        // MARK: DEBUG
+        self.formSize = CGSize(width: maxWidth, height: maxHeight)
+        self.maxWidth = maxWidth
+        self.maxHeight = maxHeight
+        frame = CGSize(width: maxWidth, height: maxHeight)
         self.dropShadow = dropShadow!
         self.valueSpecifier = valueSpecifier!
         self.rateValue = rateValue
@@ -80,7 +94,15 @@ struct LineChartView: View {
         self.subtitleFont = subtitleFont
         self.titleFont = titleFont
         self.priceFont = priceFont
+        self.minHeight = minHeight
+        self.minWidth = minWidth
         
+        if fullScreen {
+            self.edgesIgnored = .all
+            self.topPadding = 7
+        } else {
+            self.edgesIgnored = .bottom
+        }
     }
     
     private var internalRate: Int? {
@@ -104,74 +126,92 @@ struct LineChartView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .center){
-            VStack(alignment: .leading){
-                VStack(alignment: .leading, spacing: 0){
-                    if (self.title != nil) {
-                        Text(self.title!)
-                            .font(self.titleFont)
-                            .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.textColor : self.style.textColor)
-                    }
-                    if (self.legend != nil){
-                        Text(self.legend!)
-                            .font(self.subtitleFont)
-                            .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor :self.style.legendTextColor)
-                    }
-                    HStack {
-                        if ((self.displayChartStats)) {
-                            if (self.showIndicatorDot) {
-                                if (self.internalRate != nil) {
-                                    Text("\(String(format: self.valueSpecifier, self.currentValue)) (\(self.internalRate!)%)").font(self.priceFont)
-                                } else {
-                                    Text("\(String(format: self.valueSpecifier, self.currentValue))").font(self.priceFont)
-                                }
-                            } else if (self.rawData.last != nil) {
-                                if (self.internalRate != nil) {
-                                    Text("\(String(format: self.valueSpecifier, self.rawData.last!)) (\(self.internalRate!)%)").font(self.priceFont)
-                                } else {
-                                    Text("\(String(format: self.valueSpecifier, self.rawData.last!))").font(self.priceFont)
-                                }
-                            } else if (self.internalRate != nil) {
-                                Text("(\(self.internalRate!)%)").font(self.priceFont)
-                            } else {
-                                Text("nil")
+        GeometryReader { g in
+            ZStack(alignment: .center) {
+                VStack(alignment: .leading) {
+                    if ((self.title != nil) || (self.legend != nil) || (self.displayChartStats)) {
+                        VStack(alignment: .leading, spacing: 0){
+                            if (self.title != nil) {
+                                Text(self.title!)
+                                    .font(self.titleFont)
+                                    .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.textColor : self.style.textColor)
                             }
+                            if (self.legend != nil){
+                                Text(self.legend!)
+                                    .font(self.subtitleFont)
+                                    .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor :self.style.legendTextColor)
+                            }
+                            HStack {
+                                if ((self.displayChartStats)) {
+                                    if (self.showIndicatorDot) {
+                                        if (self.internalRate != nil) {
+                                            Text("\(String(format: self.valueSpecifier, self.currentValue)) (\(self.internalRate!)%)").font(self.priceFont)
+                                        } else {
+                                            Text("\(String(format: self.valueSpecifier, self.currentValue))").font(self.priceFont)
+                                        }
+                                    } else if (self.rawData.last != nil) {
+                                        if (self.internalRate != nil) {
+                                            Text("\(String(format: self.valueSpecifier, self.rawData.last!)) (\(self.internalRate!)%)").font(self.priceFont)
+                                        } else {
+                                            Text("\(String(format: self.valueSpecifier, self.rawData.last!))").font(self.priceFont)
+                                        }
+                                    } else if (self.internalRate != nil) {
+                                        Text("(\(self.internalRate!)%)").font(self.priceFont)
+                                    } else {
+                                        Text("nil")
+                                    }
+                                }
+                            }.padding(.top)
                         }
-                    }.padding(.top)
-                }
-                .transition(.opacity)
-                .animation(.easeIn(duration: 0.1))
-                .padding([.leading, .top])
+                        .transition(.opacity)
+                        .animation(.easeIn(duration: 0.1))
+                        .padding([.leading, .top])
+                        .padding(.top, self.topPadding)
+                    }
+                    
+                    
+                    
 
-                GeometryReader{ geometry in
-                    Line(data: self.data,
-                         frame: .constant(geometry.frame(in: .local)),
-                         touchLocation: self.$touchLocation,
-                         showIndicator: self.$showIndicatorDot,
-                         minDataValue: .constant(nil),
-                         maxDataValue: .constant(nil),
-                         lineGradient: self.style.lineGradient,
-                         backgroundGradient: self.style.backgroundGradient,
-                         indicatorKnob: self.indicatorKnob,
-                         curvedLines: self.curvedLines
-                    )
+                    GeometryReader{ geometry in
+                        Line(data: self.data,
+                             frame: .constant(geometry.frame(in: .local)),
+                             touchLocation: self.$touchLocation,
+                             showIndicator: self.$showIndicatorDot,
+                             minDataValue: .constant(nil),
+                             maxDataValue: .constant(nil),
+                             lineGradient: self.style.lineGradient,
+                             backgroundGradient: self.style.backgroundGradient,
+                             indicatorKnob: self.indicatorKnob,
+                             curvedLines: self.curvedLines
+                        )
+                    }
+                    .frame(minWidth: self.minWidth, maxWidth: self.maxWidth, minHeight: self.minHeight, maxHeight: self.maxHeight)
+                    .padding(.bottom)
+                    
+                    // MARK: Frames
+    //                .clipShape(RoundedRectangle(cornerRadius: 0))
+                    
                 }
-                .frame(width: frame.width, height: 2*frame.height + 50)
-                .clipShape(RoundedRectangle(cornerRadius: 0))
-                .offset(x: 0, y: 0)
-            }.frame(width: self.formSize.width).background(self.style.backgroundColor)
+                // MARK: Frames
+                .background(self.style.backgroundColor)
+                .edgesIgnoringSafeArea(self.edgesIgnored)
+                .frame(width: (self.maxWidth == .infinity ? g.size.width : self.maxWidth),
+                       height: (self.maxHeight == .infinity ? g.size.height : self.maxHeight))
+                
+            }.gesture(DragGesture(minimumDistance: 0)
+                .onChanged({ value in
+                    self.touchLocation = value.location
+                    self.showIndicatorDot = true
+                    // MARK: Frames
+                    self.getClosestDataPoint(toPoint: value.location,
+                                             width:(self.maxWidth == .infinity ? g.size.width : self.maxWidth),
+                                             height:(self.maxHeight == .infinity ? g.size.height : self.maxHeight))
+                })
+                .onEnded({ value in
+                    self.showIndicatorDot = false
+                })
+            )
         }
-        .gesture(DragGesture(minimumDistance: 0)
-        .onChanged({ value in
-            self.touchLocation = value.location
-            self.showIndicatorDot = true
-            self.getClosestDataPoint(toPoint: value.location, width:self.frame.width, height: self.frame.height)
-        })
-            .onEnded({ value in
-                self.showIndicatorDot = false
-            })
-        )
-        
     }
     
     @discardableResult func getClosestDataPoint(toPoint: CGPoint, width:CGFloat, height: CGFloat) -> CGPoint {
