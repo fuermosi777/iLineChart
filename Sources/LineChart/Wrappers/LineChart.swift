@@ -40,7 +40,7 @@ public struct LineChart: View {
                  numberColor: Color? = nil,
                  canvasBackgroundColor: Color? = nil,
                  curvedLines: Bool = true,
-                 cursorColor: Color = Colors.IndicatorKnob,
+                 cursorColor: Color = Colors.NeonPink,
                  displayChartStats: Bool = false,
                  minWidth: CGFloat = 0,
                  minHeight: CGFloat = 0,
@@ -147,8 +147,8 @@ public enum PieChartStyle {
 
 public var myStyle: ChartStyle = ChartStyle(
     backgroundColor: Color.white,
-    accentColor: Colors.OrangeStart,
-    secondGradientColor: Colors.OrangeEnd,
+    accentColor: Colors.NeonOrange,
+    secondGradientColor: Colors.NeonRed,
     textColor: Color.black,
     legendTextColor: Color.gray,
     dropShadowColor: Color.gray)

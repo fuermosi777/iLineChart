@@ -25,7 +25,7 @@ public struct MagnifierRect: View {
                 RoundedRectangle(cornerRadius: 16)
                     .frame(width: 60, height: 280)
                     .foregroundColor(Color.white)
-                    .shadow(color: Colors.LegendText, radius: 12, x: 0, y: 6 )
+                    .shadow(color: Colors.Gray, radius: 12, x: 0, y: 6 )
                     .blendMode(.multiply)
             }
         }

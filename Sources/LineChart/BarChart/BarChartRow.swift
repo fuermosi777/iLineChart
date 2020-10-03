@@ -49,8 +49,8 @@ public struct BarChartRow : View {
 struct ChartRow_Previews : PreviewProvider {
     static var previews: some View {
         Group {
-            BarChartRow(data: [0], accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
-            BarChartRow(data: [8,23,54,32,12,37,7], accentColor: Colors.OrangeStart, touchLocation: .constant(-1))
+            BarChartRow(data: [0], accentColor: Colors.NeonOrange, touchLocation: .constant(-1))
+            BarChartRow(data: [8,23,54,32,12,37,7], accentColor: Colors.NeonOrange, touchLocation: .constant(-1))
         }
     }
 }

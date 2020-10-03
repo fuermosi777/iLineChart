@@ -57,7 +57,7 @@ struct LineChartView: View {
                 rateValue: Int? = 14,
                 dropShadow: Bool? = false,
                 valueSpecifier: String? = "%.1f",
-                cursorColor: Color = Colors.IndicatorKnob,
+                cursorColor: Color = Colors.NeonPink,
                 curvedLines: Bool = true,
                 displayChartStats: Bool = true,
                 minWidth: CGFloat = 0,
@@ -136,11 +136,13 @@ struct LineChartView: View {
                                     .font(self.titleFont)
                                     .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.textColor : self.style.textColor)
                             }
+                            
                             if (self.legend != nil){
                                 Text(self.legend!)
                                     .font(self.subtitleFont)
                                     .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.legendTextColor :self.style.legendTextColor)
                             }
+                            
                             HStack {
                                 if ((self.displayChartStats)) {
                                     if (self.showIndicatorDot) {
