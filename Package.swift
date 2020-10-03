@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftUICharts",
+    name: "LineChart",
     platforms: [
         .iOS(.v13), .watchOS(.v6), .macOS(.v10_15)
     ],
