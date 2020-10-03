@@ -97,12 +97,7 @@ struct LineChartView: View {
         self.minHeight = minHeight
         self.minWidth = minWidth
         
-        if fullScreen {
-            self.edgesIgnored = .all
-            self.topPadding = 7
-        } else {
-            self.edgesIgnored = .bottom
-        }
+        self.edgesIgnored = fullScreen ? .all : .bottom
     }
     
     private var internalRate: Int? {
@@ -128,6 +123,13 @@ struct LineChartView: View {
     var body: some View {
         GeometryReader { g in
             ZStack(alignment: .center) {
+                if (self.edgesIgnored == .all) {
+                    Rectangle()
+                        .fill(self.style.backgroundColor)
+                        .edgesIgnoringSafeArea(self.edgesIgnored)
+                }
+                
+                
                 VStack(alignment: .leading) {
                     if ((self.title != nil) || (self.legend != nil) || (self.displayChartStats)) {
                         VStack(alignment: .leading, spacing: 0){
@@ -171,8 +173,6 @@ struct LineChartView: View {
                         .padding(.top, self.topPadding)
                     }
                     
-                    
-                    
 
                     GeometryReader{ geometry in
                         Line(data: self.data,
@@ -190,17 +190,17 @@ struct LineChartView: View {
                     .frame(minWidth: self.minWidth, maxWidth: self.maxWidth, minHeight: self.minHeight, maxHeight: self.maxHeight)
                     .padding(.bottom)
                     
+                    
                     // MARK: Frames
     //                .clipShape(RoundedRectangle(cornerRadius: 0))
                     
                 }
-                // MARK: Frames
                 .background(self.style.backgroundColor)
-                .edgesIgnoringSafeArea(self.edgesIgnored)
-                .frame(width: (self.maxWidth == .infinity ? g.size.width : self.maxWidth),
-                       height: (self.maxHeight == .infinity ? g.size.height : self.maxHeight))
+                .frame(width: (self.maxWidth == .infinity ? g.size.width : self.maxWidth), height: (self.maxHeight == .infinity ? g.size.height : self.maxHeight))
+               
                 
-            }.gesture(DragGesture(minimumDistance: 0)
+            }
+            .gesture(DragGesture(minimumDistance: 0)
                 .onChanged({ value in
                     self.touchLocation = value.location
                     self.showIndicatorDot = true
@@ -212,6 +212,8 @@ struct LineChartView: View {
                 .onEnded({ value in
                     self.showIndicatorDot = false
                 })
+                // MARK: Frames
+                
             )
         }
     }
