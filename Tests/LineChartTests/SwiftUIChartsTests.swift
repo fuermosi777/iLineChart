@@ -1,7 +1,7 @@
 import XCTest
-@testable import SwiftUICharts
+@testable import LineChart
 
-final class SwiftUIChartsTests: XCTestCase {
+final class LineChartTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct

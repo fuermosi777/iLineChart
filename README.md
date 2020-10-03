@@ -1,4 +1,4 @@
-# SwiftUICharts
+# LineChart
 
 Swift package for displaying charts effortlessly.
 
