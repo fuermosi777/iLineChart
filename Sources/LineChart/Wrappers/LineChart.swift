@@ -35,10 +35,10 @@ public struct LineChart: View {
                  style: LineChartStyle = .primary,
                  lineGradient: GradientColor? = nil,
                  chartBackgroundGradient: GradientColor? = nil,
+                 canvasBackgroundColor: Color? = nil,
                  titleColor: Color? = nil,
                  subtitleColor: Color? = nil,
                  numberColor: Color? = nil,
-                 canvasBackgroundColor: Color? = nil,
                  curvedLines: Bool = true,
                  cursorColor: Color = Colors.NeonPink,
                  displayChartStats: Bool = false,
@@ -49,8 +49,9 @@ public struct LineChart: View {
                  titleFont: Font = .system(size: 30, weight: .regular, design: .rounded),
                  subtitleFont: Font = .system(size: 14, weight: .light, design: .rounded),
                  dataFont: Font = .system(size: 16, weight: .bold, design: .monospaced),
-                 floatingPointNumberFormat: String = "%.1f",
-                 fullScreen: Bool = false) {
+                 fullScreen: Bool = false,
+                 floatingPointNumberFormat: String = "%.1f"
+                 ) {
         
         
         self.data = data
