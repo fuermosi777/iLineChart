@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iColors
 
 struct LineChartView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme

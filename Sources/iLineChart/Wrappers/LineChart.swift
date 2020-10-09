@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import iColors
 
 public struct iLineChart: View {
     public var data: [Double]

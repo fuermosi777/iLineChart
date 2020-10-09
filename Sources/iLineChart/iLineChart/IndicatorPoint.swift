@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import iColors
 
 struct IndicatorPoint: View {
     var indicatorKnob: Color = Colors.NeonPink
