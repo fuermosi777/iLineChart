@@ -1,7 +1,7 @@
 import XCTest
 
-import LineChartTests
+import iLineChartTests
 
 var tests = [XCTestCaseEntry]()
-tests += LineChartTests.allTests()
+tests += iLineChartTests.allTests()
 XCTMain(tests)

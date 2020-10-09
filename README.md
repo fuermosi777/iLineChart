@@ -1,4 +1,4 @@
-# LineChart
+# iLineChart
 
 Swift package for displaying charts effortlessly.
 

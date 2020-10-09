@@ -1,6 +1,6 @@
 //
 //  LineCard.swift
-//  LineChart
+//  iLineChart
 //
 //  Created by András Samu on 2019. 08. 31..
 //  Copyright © 2019. András Samu. All rights reserved.

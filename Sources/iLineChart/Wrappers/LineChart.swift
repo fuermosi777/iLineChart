@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct LineChart: View {
+public struct iLineChart: View {
     public var data: [Double]
     public var title: String?
     public var subtitle: String?
