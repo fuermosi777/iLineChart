@@ -18,9 +18,9 @@ public struct Line: View {
     @Binding var maxDataValue: Double?
     @State private var showFull: Bool = false
     @State var showBackground: Bool = true
-    var lineGradient: GradientColor = GradientColor(start: Colors.NeonPurple, end: Colors.NeonOceanBlue)
-    var backgroundGradient: GradientColor = GradientColor(start: Colors.NeonBlue, end: .white)
-    var indicatorKnob: Color = Colors.NeonPink
+    var lineGradient: GradientColor = GradientColor(start: Color.neonPurple, end: Color.neonOceanBlue)
+    var backgroundGradient: GradientColor = GradientColor(start: Color.neonBlue, end: .white)
+    var indicatorKnob: Color = Color.neonPink
     var index:Int = 0
     let padding:CGFloat = 30
     var curvedLines: Bool = true

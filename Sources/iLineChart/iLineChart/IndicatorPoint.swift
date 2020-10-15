@@ -7,10 +7,10 @@
 //
 
 import SwiftUI
-import iColors
+import iColor
 
 struct IndicatorPoint: View {
-    var indicatorKnob: Color = Colors.NeonPink
+    var indicatorKnob: Color = Color.neonPink
     
     var body: some View {
         ZStack{
@@ -20,7 +20,7 @@ struct IndicatorPoint: View {
                 .stroke(Color.white, style: StrokeStyle(lineWidth: 4))
         }
         .frame(width: 14, height: 14)
-        .shadow(color: Colors.LightGray, radius: 6, x: 0, y: 6)
+        .shadow(color: Color.lightGray, radius: 6, x: 0, y: 6)
     }
 }
 

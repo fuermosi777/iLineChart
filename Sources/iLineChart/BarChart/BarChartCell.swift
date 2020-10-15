@@ -38,7 +38,7 @@ public struct BarChartCell : View {
 //#if DEBUG
 //struct ChartCell_Previews : PreviewProvider {
 //    static var previews: some View {
-//        BarChartCell(value: Double(0.75), width: 320, numberOfDataPoints: 12, accentColor: Colors.NeonOrange, lineGradient: nil, touchLocation: .constant(-1))
+//        BarChartCell(value: Double(0.75), width: 320, numberOfDataPoints: 12, accentColor: Color.NeonOrange, lineGradient: nil, touchLocation: .constant(-1))
 //    }
 //}
 //#endif

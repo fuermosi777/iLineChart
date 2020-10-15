@@ -41,7 +41,7 @@ public struct iLineChart: View {
                  subtitleColor: Color? = nil,
                  numberColor: Color? = nil,
                  curvedLines: Bool = true,
-                 cursorColor: Color = Colors.NeonPink,
+                 cursorColor: Color = Color.neonPink,
                  displayChartStats: Bool = false,
                  minWidth: CGFloat = 0,
                  minHeight: CGFloat = 0,
@@ -130,8 +130,8 @@ public enum PieChartStyle {
 
 public var myStyle: ChartStyle = ChartStyle(
     backgroundColor: Color.white,
-    accentColor: Colors.NeonOrange,
-    secondGradientColor: Colors.NeonRed,
+    accentColor: Color.neonOrange,
+    secondGradientColor: Color.neonRed,
     textColor: Color.black,
     legendTextColor: Color.gray,
     dropShadowColor: Color.gray)

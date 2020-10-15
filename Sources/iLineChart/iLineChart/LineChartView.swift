@@ -58,7 +58,7 @@ struct LineChartView: View {
                 rateValue: Int? = 14,
                 dropShadow: Bool? = false,
                 valueSpecifier: String? = "%.1f",
-                cursorColor: Color = Colors.NeonPink,
+                cursorColor: Color = Color.neonPink,
                 curvedLines: Bool = true,
                 displayChartStats: Bool = true,
                 minWidth: CGFloat = 0,
