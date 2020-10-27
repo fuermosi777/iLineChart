@@ -44,10 +44,15 @@ import SwiftUI
 import iLineChart
 
 struct ContentView: View {
+    var data:[Double] = ExampleData.stockData
+
     var body: some View {
         iLineChart(
-            data: [8,32,11,23,40,28,15,20,30,25],
-            title: "My Graph",
+            data: data,
+            title: "AAPL",
+            subtitle: "Apple Computers",
+            style: .tertiary,
+            curvedLines: false,
             displayChartStats: true
         )
     }
